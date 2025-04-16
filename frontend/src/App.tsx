@@ -4,19 +4,19 @@ import { CssBaseline } from '@mui/material';
 import { ReportFilterProvider } from './context/ReportFilterContext';
 import Router from './Router';
 
-// Create a custom theme
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#0ea5e9', // primary-500 from Tailwind config
-      light: '#7dd3fc', // primary-300
-      dark: '#0369a1', // primary-700
+      main: '#0ea5e9',
+      light: '#7dd3fc', 
+      dark: '#0369a1', 
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#8b5cf6', // secondary-500 from Tailwind config
-      light: '#c4b5fd', // secondary-300
-      dark: '#6d28d9', // secondary-700
+      main: '#8b5cf6', 
+      light: '#c4b5fd', 
+      dark: '#6d28d9', 
       contrastText: '#ffffff',
     },
     error: {

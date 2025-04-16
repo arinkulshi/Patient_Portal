@@ -72,13 +72,10 @@ export const createReport = async (
   try {
     const reportData = req.body;
     
-    // Create report
     const report = await reportService.createReport(reportData);
     
-    // Invalidate reports list cache
     invalidateCache('GET:/api/v1/reports');
     
-    // Send response
     res.status(201).json({
       message: 'Report created successfully',
       data: report
@@ -90,7 +87,7 @@ export const createReport = async (
 
 /**
  * Update existing report
- * @route PUT /api/v1/reports/:id
+ * @route 
  */
 export const updateReport = async (
   req: Request,
@@ -105,14 +102,12 @@ export const updateReport = async (
       throw new AppError('Report ID is required', 400, 'MISSING_PARAMETER');
     }
     
-    // Update report
     const report = await reportService.updateReport(id, reportData);
     
-    // Invalidate caches
-    invalidateCache(`GET:/api/v1/reports/${id}`); // Invalidate specific report
-    invalidateCache('GET:/api/v1/reports');       // Invalidate reports list
+    invalidateCache(`GET:/api/v1/reports/${id}`); 
+    invalidateCache('GET:/api/v1/reports');       
     
-    // Send response
+   
     res.json({
       message: 'Report updated successfully',
       data: report
@@ -138,14 +133,13 @@ export const deleteReport = async (
       throw new AppError('Report ID is required', 400, 'MISSING_PARAMETER');
     }
     
-    // Delete report
+  
     await reportService.deleteReport(id);
     
-    // Invalidate caches
-    invalidateCache(`GET:/api/v1/reports/${id}`); // Invalidate specific report
-    invalidateCache('GET:/api/v1/reports');       // Invalidate reports list
+    invalidateCache(`GET:/api/v1/reports/${id}`); 
+    invalidateCache('GET:/api/v1/reports');       
     
-    // Send response - 204 No Content
+ 
     res.status(204).end();
   } catch (error) {
     next(error);

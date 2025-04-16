@@ -1,19 +1,18 @@
 const cacheConfig = {
     enabled: process.env.CACHE_ENABLED === 'true',
-    ttl: parseInt(process.env.CACHE_TTL || '300', 10), // 5 minutes default
-    checkPeriod: 60, // Check for expired items every 60 seconds
-    maxItems: 1000, // Maximum number of items in cache
+    ttl: parseInt(process.env.CACHE_TTL || '300', 10), 
+    checkPeriod: 60, 
+    maxItems: 1000, 
     
-    // Specific cache settings for different endpoints
+    
     endpoints: {
       getAllReports: {
         enabled: true,
-        ttl: 300, // 5 minutes
+        ttl: 300, 
       },
       getReportById: {
         enabled: true,
-        ttl: 600, // 10 minutes
-      },
+        ttl: 600, 
     },
   };
   

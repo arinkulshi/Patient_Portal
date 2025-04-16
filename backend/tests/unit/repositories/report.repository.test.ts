@@ -15,7 +15,7 @@ describe('ReportRepository', () => {
   let repository: typeof ReportRepository;
   
   beforeEach(() => {
-    // Reset mock data before each test
+    
     mockStorageInstance.reset([...sampleReports]);
     
     repository = new ReportRepository();
@@ -130,7 +130,7 @@ describe('ReportRepository', () => {
       expect(createdReport.summary).toBe(newReport.summary);
       expect(createdReport.type).toBe(newReport.type);
       
-      // Verify the report was added to storage
+    
       const retrievedReport = await repository.findById(createdReport.id);
       expect(retrievedReport).not.toBeNull();
       expect(retrievedReport?.id).toBe(createdReport.id);
@@ -152,7 +152,7 @@ describe('ReportRepository', () => {
       expect(updatedReport?.summary).toBe(updates.summary);
       expect(updatedReport?.type).toBe(updates.type);
       
-      // Original fields should remain unchanged
+      
       expect(updatedReport?.patientName).toBe(sampleReports[0].patientName);
       expect(updatedReport?.patientId).toBe(sampleReports[0].patientId);
     });
@@ -177,7 +177,7 @@ describe('ReportRepository', () => {
       
       expect(result).toBe(true);
       
-      // Verify the report was deleted
+      
       const report = await repository.findById(id);
       expect(report).toBeNull();
     });
@@ -202,7 +202,7 @@ describe('ReportRepository', () => {
       const patientName = 'John Smith';
       const count = await repository.count({ patientName });
       
-      expect(count).toBeGreaterThan(0); // There should be at least one report for John Smith
+      expect(count).toBeGreaterThan(0); 
     });
   });
   

@@ -4,7 +4,6 @@ import { mockReports, filterReports, getReportById } from './report';
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
 export const handlers = [
-  // Get all reports with filtering
   rest.get(`${API_BASE_URL}/reports`, (req, res, ctx) => {
     const patientName = req.url.searchParams.get('patientName');
     const patientId = req.url.searchParams.get('patientId');
@@ -32,7 +31,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(result));
   }),
   
-  // Get report by ID
+  
   rest.get(`${API_BASE_URL}/reports/:id`, (req, res, ctx) => {
     const { id } = req.params;
     const report = getReportById(id as string);
@@ -82,8 +81,7 @@ export const handlers = [
       updatedAt: new Date().toISOString()
     };
     
-    // In a real implementation we would push to mockReports here
-    
+   
     return res(
       ctx.status(201),
       ctx.json({
@@ -120,8 +118,7 @@ export const handlers = [
       updatedAt: new Date().toISOString()
     };
     
-    // In a real implementation we would update mockReports here
-    
+  
     return res(
       ctx.status(200),
       ctx.json({
@@ -131,7 +128,7 @@ export const handlers = [
     );
   }),
   
-  // Delete report
+  
   rest.delete(`${API_BASE_URL}/reports/:id`, (req, res, ctx) => {
     const { id } = req.params;
     const reportIndex = mockReports.findIndex(r => r.id === id);
@@ -149,7 +146,7 @@ export const handlers = [
       );
     }
     
-    // In a real implementation we would remove from mockReports here
+   
     
     return res(ctx.status(204));
   })

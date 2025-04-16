@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Pages
+
 import ReportsListPage from './pages/ReportsListPage';
 import ReportDetailPage from './pages/ReportDetailPage';
-import ReportFormPage from './pages/ReportFormPage'; // We'll create this next
+import ReportFormPage from './pages/ReportFormPage'; 
 import NotFoundPage from './pages/NotFoundPage';
 
 const Router: React.FC = () => {

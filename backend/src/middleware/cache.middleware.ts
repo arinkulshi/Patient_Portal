@@ -3,22 +3,19 @@ import { Request, Response, NextFunction } from 'express';
 import NodeCache from 'node-cache';
 import cacheConfig from '../config/cache.config';
 
-// Initialize cache
+
 const cache = new NodeCache({
   stdTTL: cacheConfig.ttl,
   checkperiod: cacheConfig.checkPeriod,
   maxKeys: cacheConfig.maxItems,
-  useClones: false  // For better performance, don't clone objects
+  useClones: false  
 });
 
-/**
- * Function to generate a cache key from request
- */
+
 export const generateCacheKey = (req: Request): string => {
-  // Base key on URL and query parameters
+
   const baseKey = `${req.method}:${req.originalUrl}`;
   
-  // For more specific keys, we can include query parameters
   if (Object.keys(req.query).length > 0) {
     const queryString = JSON.stringify(req.query);
     return `${baseKey}:${queryString}`;

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ReportCard from '../../../../src/components/reports/ReportCard';
 import { Report } from '../../../../src/types/report';
 
-// Create a wrapper for Router context
+
 const renderWithRouter = (ui: React.ReactElement) => {
   return render(ui, { wrapper: BrowserRouter });
 };
@@ -59,7 +59,6 @@ describe('ReportCard Component', () => {
     const handleDelete = vi.fn();
     renderWithRouter(<ReportCard report={mockReport} onDelete={handleDelete} />);
     
-    // Find the delete button by its tooltip and click it
     const deleteButton = screen.getByLabelText('Delete Report');
     fireEvent.click(deleteButton);
     

@@ -9,7 +9,7 @@ import Card from '@/components/common/Card';
 import { Report, ReportType } from '@/types/report';
 import { getHighestAlertSeverity } from '@/utils/alerts';
 
-// Map report types to colors
+
 const typeColorMap: Record<ReportType, string> = {
   General: 'primary',
   Lab: 'secondary',

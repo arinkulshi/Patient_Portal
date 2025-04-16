@@ -74,7 +74,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
         [name]: value
       });
       
-      // Clear validation error when field is changed
+      
       if (validationErrors[name]) {
         setValidationErrors({
           ...validationErrors,
@@ -113,14 +113,13 @@ const ReportForm: React.FC<ReportFormProps> = ({
     if (validateForm()) {
       const result = await onSubmit(formData);
       if (result) {
-        // Redirect to the report detail page after successful submission
         navigate(`/reports/${result.id}`);
       }
     }
   };
   const handleSelectChange = (
-    event: SelectChangeEvent<ReportType>, // this makes it type-safe
-    _: React.ReactNode // the second arg is not used
+    event: SelectChangeEvent<ReportType>, 
+    _: React.ReactNode 
   ) => {
     const { name, value } = event.target;
   

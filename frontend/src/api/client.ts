@@ -19,7 +19,6 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       (error: AxiosError<ApiError>) => {
-        // Handle global errors here (e.g., logging, notifications)
         return Promise.reject(error);
       }
     );
@@ -69,7 +68,6 @@ class ApiClient {
     if (error.response) {
       const errorData = error.response.data;
       console.error('API Error:', errorData);
-      // You could implement global error handling here (e.g., toast notifications)
     } else if (error.request) {
       console.error('No response received:', error.request);
     } else {

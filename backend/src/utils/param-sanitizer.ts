@@ -4,9 +4,7 @@ import { ReportFilterParams } from '../types';
 import { FilterOptions } from '../repositories/base.repository';
 import { AppError } from '../middleware/error.middleware';
 
-/**
- * Extract and sanitize report filter parameters from request
- */
+
 export const extractReportFilters = (req: Request): ReportFilterParams => {
   const filterParams: ReportFilterParams = {
     patientName: req.query.patientName as string,
@@ -16,7 +14,6 @@ export const extractReportFilters = (req: Request): ReportFilterParams => {
     toDate: req.query.toDate as string
   };
 
-  // Remove undefined or empty string values from filters
   Object.keys(filterParams).forEach(key => {
     if (
       filterParams[key as keyof ReportFilterParams] === undefined ||
@@ -26,7 +23,6 @@ export const extractReportFilters = (req: Request): ReportFilterParams => {
     }
   });
 
-  // Sanitize string inputs to prevent injection
   if (filterParams.patientName) {
     filterParams.patientName = sanitizeString(filterParams.patientName);
   }
@@ -39,7 +35,6 @@ export const extractReportFilters = (req: Request): ReportFilterParams => {
     filterParams.type = sanitizeString(filterParams.type);
   }
 
-  // Validate date formats if provided
   if (filterParams.fromDate && !isValidDateString(filterParams.fromDate)) {
     throw new AppError(
       'Invalid fromDate format. Use ISO format (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.sssZ)',
@@ -59,9 +54,7 @@ export const extractReportFilters = (req: Request): ReportFilterParams => {
   return filterParams;
 };
 
-/**
- * Extract and validate pagination options from request
- */
+
 export const extractPaginationOptions = (req: Request): FilterOptions => {
   const rawLimit = req.query.limit as string | undefined;
   const rawOffset = req.query.offset as string | undefined;
@@ -92,27 +85,21 @@ export const extractPaginationOptions = (req: Request): FilterOptions => {
   };
 };
 
-/**
- * Sanitize string input to prevent injection attacks
- */
+
 export const sanitizeString = (input: string): string => {
-  // Basic sanitization - replace potentially harmful characters
   return input
     .trim()
-    .replace(/[<>]/g, ''); // Remove angle brackets to prevent HTML injection
+    .replace(/[<>]/g, ''); 
 };
 
-/**
- * Check if a string is a valid date in ISO format
- */
+
 export const isValidDateString = (dateString: string): boolean => {
-  // First, try parsing as ISO format
+
   const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
   if (isoDateRegex.test(dateString)) {
     return !isNaN(Date.parse(dateString));
   }
 
-  // Also accept YYYY-MM-DD format
   const simpleDateRegex = /^\d{4}-\d{2}-\d{2}$/;
   if (simpleDateRegex.test(dateString)) {
     return !isNaN(Date.parse(dateString));

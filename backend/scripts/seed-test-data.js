@@ -2,23 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Generate a random date within a range
- */
+
 function randomDate(start, end) {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
-/**
- * Format date as ISO string
- */
+
 function formatDate(date) {
   return date.toISOString();
 }
 
-/**
- * Generate a random report
- */
+
 function generateRandomReport(index) {
   const now = new Date();
   const oneYearAgo = new Date();
@@ -66,9 +60,7 @@ function generateRandomReport(index) {
   };
 }
 
-/**
- * Generate test reports data
- */
+
 function generateTestData(count) {
   const reports = [];
   
@@ -79,14 +71,10 @@ function generateTestData(count) {
   return reports;
 }
 
-/**
- * Write test data to file
- */
 function writeTestData(filePath, count = 20) {
   const data = generateTestData(count);
   const dataString = JSON.stringify(data, null, 2);
   
-  // Ensure directory exists
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -96,7 +84,6 @@ function writeTestData(filePath, count = 20) {
   console.log(`Generated ${count} test reports at ${filePath}`);
 }
 
-// If this script is run directly
 if (require.main === module) {
   const count = process.argv[2] || 20;
   const filePath = process.argv[3] || path.join(__dirname, '../tests/fixtures/reports.json');

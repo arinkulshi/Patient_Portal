@@ -4,9 +4,7 @@ import { reportRepository, ReportRepository } from '../repositories/report.repos
 import { FilterOptions, PaginatedResult } from '../repositories/base.repository';
 import { AppError } from '../middleware/error.middleware';
 
-/**
- * Service for Report-related business logic
- */
+
 export class ReportService {
   private repository: ReportRepository;
   
@@ -14,16 +12,12 @@ export class ReportService {
     this.repository = repository;
   }
   
-  /**
-   * Initialize the service
-   */
+ 
   async initialize(): Promise<void> {
     await this.repository.initialize();
   }
   
-  /**
-   * Get all reports with filtering and pagination
-   */
+ 
   async getReports(
     filterParams?: ReportFilterParams,
     options?: FilterOptions
@@ -31,9 +25,7 @@ export class ReportService {
     return this.repository.findWithPagination(filterParams, options);
   }
   
-  /**
-   * Get a report by ID
-   */
+ 
   async getReportById(id: string): Promise<Report> {
     const report = await this.repository.findById(id);
     
@@ -44,11 +36,8 @@ export class ReportService {
     return report;
   }
   
-  /**
-   * Create a new report
-   */
+ 
   async createReport(reportData: Partial<Report>): Promise<Report> {
-    // Validate required fields
     this.validateReportData(reportData);
     
     // Set default values for missing fields
@@ -59,14 +48,10 @@ export class ReportService {
     return this.repository.create(reportData);
   }
   
-  /**
-   * Update an existing report
-   */
+ 
   async updateReport(id: string, reportData: Partial<Report>): Promise<Report> {
-    // Ensure report exists
     await this.getReportById(id);
     
-    // Update the report
     const updatedReport = await this.repository.update(id, reportData);
     
     if (!updatedReport) {
@@ -76,14 +61,10 @@ export class ReportService {
     return updatedReport;
   }
   
-  /**
-   * Delete a report
-   */
+ 
   async deleteReport(id: string): Promise<void> {
-    // Ensure report exists
     await this.getReportById(id);
     
-    // Delete the report
     const success = await this.repository.delete(id);
     
     if (!success) {
@@ -91,20 +72,15 @@ export class ReportService {
     }
   }
   
-  /**
-   * Get reports for a specific patient
-   */
+
   async getPatientReports(patientName: string, options?: FilterOptions): Promise<PaginatedResult<Report>> {
     return this.getReports({ patientName }, options);
   }
   
-  /**
-   * Get reports containing medical alerts (tachycardia or arrhythmia)
-   */
+ 
   async getReportsWithMedicalAlerts(options?: FilterOptions): Promise<Report[]> {
     const allReports = await this.repository.findAll();
     
-    // Filter reports containing alert keywords
     const alertKeywords = ['tachycardia', 'arrhythmia'];
     
     const alertReports = allReports.filter(report => 
@@ -116,9 +92,7 @@ export class ReportService {
     return alertReports;
   }
   
-  /**
-   * Validate report data
-   */
+ 
   private validateReportData(reportData: Partial<Report>): void {
     if (!reportData.patientName) {
       throw new AppError('Patient name is required', 400, 'VALIDATION_ERROR');
@@ -134,5 +108,4 @@ export class ReportService {
   }
 }
 
-// Singleton instance for the application
 export const reportService = new ReportService();

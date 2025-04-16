@@ -4,7 +4,7 @@ import { useReports } from '../../../src/hooks/useReports';
 import { reportService } from '../../../src/api/reports';
 import { mockReports } from '../../mocks/report';
 
-// Mock the report service
+
 vi.mock('@/api/reports', () => ({
   reportService: {
     getReports: vi.fn(),
@@ -30,16 +30,15 @@ describe('useReports Hook', () => {
 
     const { result } = renderHook(() => useReports());
 
-    // Initial loading state
+ 
     expect(result.current.loading).toBe(true);
     expect(result.current.reports).toEqual([]);
     expect(result.current.pagination).toBeNull();
     expect(result.current.error).toBeNull();
 
-    // Wait for the fetch to complete
+
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    // Check that the data was loaded correctly
     expect(result.current.reports).toEqual(mockReports.slice(0, 2));
     expect(result.current.pagination).toEqual({
       total: mockReports.length,

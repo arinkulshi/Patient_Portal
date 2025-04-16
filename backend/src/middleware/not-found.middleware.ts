@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from './error.middleware';
 
-/**
- * Middleware to handle 404 Not Found errors
- */
+
 export const notFoundMiddleware = (
   req: Request,
   res: Response,

@@ -3,13 +3,10 @@ import reportRoutes from './report.routes';
 
 const router = Router();
 
-// API version prefix
 const API_V1 = '/v1';
 
-// Register all routes with versioning
 router.use(`${API_V1}/reports`, reportRoutes);
 
-// API information endpoint
 router.get('/', (req, res) => {
   res.json({
     name: 'Patient Portal API',

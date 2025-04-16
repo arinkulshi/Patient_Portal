@@ -1,20 +1,16 @@
-/**
- * Report interface representing a patient medical report
- */
+
 export interface Report {
     id: string;
     patientName: string;
     patientId: string;
-    date: string;  // ISO format date
+    date: string;  
     summary: string;
-    type: string;  // e.g., "Lab", "Radiology", "General"
+    type: string; 
     createdAt: string;
     updatedAt: string;
   }
   
-  /**
-   * Parameters for filtering reports
-   */
+  
   export interface ReportFilterParams {
     patientName?: string;
     patientId?: string;
@@ -23,9 +19,7 @@ export interface Report {
     toDate?: string;
   }
   
-  /**
-   * Response structure for report list API
-   */
+ 
   export interface ReportListResponse {
     data: Report[];
     total: number;
@@ -33,9 +27,7 @@ export interface Report {
     limit: number;
   }
   
-  /**
-   * Error response structure
-   */
+
   export interface ErrorResponse {
     message: string;
     code: string;

@@ -2,9 +2,7 @@
 import { Report } from '../../src/types';
 import { v4 as uuidv4 } from 'uuid';
 
-/**
- * Generate a test report with optional overrides
- */
+
 export const generateTestReport = (overrides?: Partial<Report>): Report => {
   const now = new Date().toISOString();
   
@@ -21,9 +19,7 @@ export const generateTestReport = (overrides?: Partial<Report>): Report => {
   };
 };
 
-/**
- * Generate multiple test reports
- */
+
 export const generateTestReports = (count: number): Report[] => {
   return Array(count)
     .fill(null)
@@ -35,9 +31,7 @@ export const generateTestReports = (count: number): Report[] => {
     }));
 };
 
-/**
- * Sample reports for testing
- */
+
 export const sampleReports: Report[] = [
   {
     id: '1',
@@ -91,7 +85,6 @@ export const sampleReports: Report[] = [
   }
 ];
 
-// Create a JSON file for the sample reports
 export const createTestReportsJson = (): string => {
   return JSON.stringify(sampleReports, null, 2);
 };

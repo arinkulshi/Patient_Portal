@@ -2,18 +2,15 @@ const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-// Create temporary test directory if it doesn't exist
+
 const testDataDir = path.join(__dirname, 'fixtures');
 if (!fs.existsSync(testDataDir)) {
   fs.mkdirSync(testDataDir, { recursive: true });
 }
 
-/**
- * Run tests with the specified options
- */
+
 function runTests(options = []) {
   try {
-    // Run the tests
     const command = `jest ${options.join(' ')}`;
     console.log(`Running: ${command}`);
     
@@ -33,16 +30,14 @@ function runTests(options = []) {
   }
 }
 
-/**
- * Main function
- */
+
 function main() {
   const args = process.argv.slice(2);
   
-  // Default options
-  let options = ['--runInBand']; // Run tests sequentially
   
-  // Add any command-line arguments
+  let options = ['--runInBand'];
+  
+  
   if (args.length > 0) {
     options = options.concat(args);
   }

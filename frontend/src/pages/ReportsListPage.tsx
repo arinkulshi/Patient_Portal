@@ -14,10 +14,6 @@ import Card from '@/components/common/Card';
 const ReportsListPage: React.FC = () => {
 
 
-  
-
-
-
 
   const { filters, updateFilter, resetFilters } = useReportFilters();
   const { 
@@ -30,7 +26,6 @@ const ReportsListPage: React.FC = () => {
   } = useReports(filters);
 
   useEffect(() => {
-    // Initial fetch with current filters
     fetchReports(filters);
   }, []);
 
@@ -73,8 +68,7 @@ const ReportsListPage: React.FC = () => {
   const handleDeleteReport = async (id: string) => {
     const success = await deleteReport(id);
     
-    // If delete was successful and we're now showing an empty page,
-    // go back to the previous page (if we're not already on the first)
+   
     if (success && pagination && reports.length === 1 && pagination.page > 1) {
       handlePageChange(pagination.page - 1);
     }

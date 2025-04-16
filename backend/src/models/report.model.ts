@@ -1,10 +1,7 @@
-// backend/src/models/report.model.ts
 import { Report } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
-/**
- * ReportModel class for creating and managing Report objects
- */
+
 export class ReportModel implements Report {
   id: string;
   patientName: string;
@@ -26,9 +23,7 @@ export class ReportModel implements Report {
     this.updatedAt = data.updatedAt || new Date().toISOString();
   }
 
-  /**
-   * Update the report with new data
-   */
+ 
   update(data: Partial<Report>): void {
     if (data.patientName) this.patientName = data.patientName;
     if (data.patientId) this.patientId = data.patientId;
@@ -38,9 +33,7 @@ export class ReportModel implements Report {
     this.updatedAt = new Date().toISOString();
   }
 
-  /**
-   * Convert model to plain object
-   */
+
   toJSON(): Report {
     return {
       id: this.id,
@@ -54,9 +47,7 @@ export class ReportModel implements Report {
     };
   }
 
-  /**
-   * Create a ReportModel from a plain object
-   */
+  
   static fromJSON(data: any): ReportModel {
     return new ReportModel(data);
   }

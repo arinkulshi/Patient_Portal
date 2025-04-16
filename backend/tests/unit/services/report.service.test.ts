@@ -5,7 +5,7 @@ import { Report } from '../../../src/types';
 import { sampleReports } from '../../fixtures/test-report';
 import { AppError } from '../../../src/middleware/error.middleware';
 
-// Mock the repository
+
 const mockRepository = {
   initialize: jest.fn(),
   findAll: jest.fn(),
@@ -22,10 +22,10 @@ describe('ReportService', () => {
   let service: ReportService;
   
   beforeEach(() => {
-    // Reset all mocks before each test
+   
     jest.clearAllMocks();
     
-    // Create a new service instance with the mock repository
+  
     service = new ReportService(mockRepository as unknown as ReportRepository);
   });
   
@@ -109,7 +109,6 @@ describe('ReportService', () => {
     
     it('should throw an error when required fields are missing', async () => {
       const invalidData = {
-        // Missing patientName and summary
         type: 'General'
       };
       
@@ -268,7 +267,7 @@ describe('ReportService', () => {
       expect(mockRepository.findAll).toHaveBeenCalled();
       expect(result).toHaveLength(alertReports.length);
       
-      // Each report should contain at least one alert keyword
+     
       result.forEach(report => {
         const containsAlert = 
           report.summary.toLowerCase().includes('tachycardia') || 

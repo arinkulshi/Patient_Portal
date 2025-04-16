@@ -11,24 +11,24 @@ import { requestLoggerMiddleware } from './middleware/request-logger.middleware'
 import { reportRepository } from './repositories/report.repository';
 import { reportService } from './services/report.service';
 
-// Create Express application
+
 const app = express();
 
-// Security middleware
-app.use(helmet()); // Set security headers
-app.use(cors(serverConfig.cors)); // Configure CORS
 
-// Request parsing middleware
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(helmet()); 
+app.use(cors(serverConfig.cors)); 
 
-// Logging middleware
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+
+
 if (serverConfig.nodeEnv !== 'test') {
-  app.use(morgan('dev')); // HTTP request logger
+  app.use(morgan('dev')); 
 }
-app.use(requestLoggerMiddleware); // Custom request logger
+app.use(requestLoggerMiddleware); 
 
-// Health check endpoint
+
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'UP',
@@ -37,12 +37,10 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// Initialize repositories and services
+
 let isInitialized = false;
 
-/**
- * Initialize the application data stores and services
- */
+
 export const initializeApp = async () => {
   if (isInitialized) {
     return;
@@ -51,10 +49,10 @@ export const initializeApp = async () => {
   try {
     console.log('Initializing repositories and services...');
     
-    // Initialize repository (loads data from storage)
+    
     await reportRepository.initialize();
     
-    // Initialize service
+    
     await reportService.initialize();
     
     isInitialized = true;
@@ -65,11 +63,11 @@ export const initializeApp = async () => {
   }
 };
 
-// API routes
+
 app.use('/api', routes);
 
-// Error handling
-app.use(notFoundMiddleware); // 404 handler
-app.use(errorMiddleware); // Global error handler
+
+app.use(notFoundMiddleware); 
+app.use(errorMiddleware);
 
 export default app;

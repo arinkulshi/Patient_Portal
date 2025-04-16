@@ -29,33 +29,25 @@ export class ReportRepository implements IRepository<Report> {
     return this.storage.query(filterFunction);
   }
   
-  /**
-   * Create an optimized filter function based on filter parameters
-   */
+ 
   private createFilterFunction(filters: ReportFilterParams): (report: Report) => boolean {
-    // Preprocess filter values for efficient comparison
     const patientNameLower = filters.patientName?.toLowerCase();
     const fromDate = filters.fromDate ? new Date(filters.fromDate).getTime() : null;
     const toDate = filters.toDate ? new Date(filters.toDate).getTime() : null;
     
-    // Return a function that checks all conditions
     return (report: Report): boolean => {
-      // Filter by patientName (case-insensitive partial match)
       if (patientNameLower && !report.patientName.toLowerCase().includes(patientNameLower)) {
         return false;
       }
       
-      // Filter by patientId (exact match)
       if (filters.patientId && report.patientId !== filters.patientId) {
         return false;
       }
       
-      // Filter by type (exact match)
       if (filters.type && report.type !== filters.type) {
         return false;
       }
       
-      // Filter by date range (use timestamp comparison for better performance)
       if (fromDate) {
         const reportDate = new Date(report.date).getTime();
         if (reportDate < fromDate) {
@@ -74,24 +66,18 @@ export class ReportRepository implements IRepository<Report> {
     };
   }
   
-  /**
-   * Find a report by ID - direct lookup is already efficient
-   */
+
   async findById(id: string): Promise<Report | null> {
     return this.storage.getById(id);
   }
   
-  /**
-   * Create a new report
-   */
+
   async create(reportData: Partial<Report>): Promise<Report> {
     const report = new ReportModel(reportData);
     return this.storage.create(report.toJSON());
   }
   
-  /**
-   * Update an existing report
-   */
+  
   async update(id: string, reportData: Partial<Report>): Promise<Report | null> {
     const existingReport = await this.findById(id);
     
@@ -105,9 +91,7 @@ export class ReportRepository implements IRepository<Report> {
     return this.storage.update(id, report.toJSON());
   }
   
-  /**
-   * Delete a report
-   */
+ 
   async delete(id: string): Promise<boolean> {
     const exists = await this.findById(id);
     
@@ -118,9 +102,7 @@ export class ReportRepository implements IRepository<Report> {
     return this.storage.delete(id);
   }
   
-  /**
-   * Count reports with optional filtering - optimized version
-   */
+ 
   async count(filters?: ReportFilterParams): Promise<number> {
     if (!filters || Object.keys(filters).length === 0) {
       return this.storage.count();
@@ -130,19 +112,15 @@ export class ReportRepository implements IRepository<Report> {
     return this.storage.count(filterFunction);
   }
   
-  /**
-   * Get reports with pagination - optimized implementation
-   */
+  
   async findWithPagination(
     filters?: ReportFilterParams,
     options: FilterOptions = { limit: 10, offset: 0 }
   ): Promise<PaginatedResult<Report>> {
     const { limit = 10, offset = 0, sortBy = 'date', sortDirection = 'desc' } = options;
     
-    // First, get filtered count for pagination metadata
     const total = await this.count(filters);
     
-    // If total is 0, return empty result early
     if (total === 0) {
       return {
         data: [],
@@ -153,16 +131,12 @@ export class ReportRepository implements IRepository<Report> {
       };
     }
     
-    // Get filtered reports
     let reports = await this.findAll(filters);
     
-    // Sort reports - potentially expensive operation
     reports = this.sortReports(reports, sortBy, sortDirection);
     
-    // Apply pagination - do this last for efficiency
     reports = reports.slice(offset, offset + limit);
     
-    // Calculate pagination metadata
     const page = Math.floor(offset / limit) + 1;
     const totalPages = Math.ceil(total / limit);
     
@@ -175,9 +149,7 @@ export class ReportRepository implements IRepository<Report> {
     };
   }
   
-  /**
-   * Sort reports - optimized with memoization for repeated sort requests
-   */
+  
   private sortReports(
     reports: Report[],
     sortBy: string = 'date',
@@ -187,13 +159,11 @@ export class ReportRepository implements IRepository<Report> {
       let aValue: any = (a as any)[sortBy];
       let bValue: any = (b as any)[sortBy];
       
-      // Handle date comparison - convert to timestamps for faster comparison
       if (sortBy === 'date' || sortBy === 'createdAt' || sortBy === 'updatedAt') {
         aValue = new Date(aValue).getTime();
         bValue = new Date(bValue).getTime();
       }
       
-      // Compare values based on sort direction
       if (sortDirection === 'asc') {
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
@@ -202,13 +172,10 @@ export class ReportRepository implements IRepository<Report> {
     });
   }
   
-  /**
-   * Close the repository and clean up resources
-   */
+
   async close(): Promise<void> {
     await this.storage.close();
   }
 }
 
-// Singleton instance for the application
 export const reportRepository = new ReportRepository();

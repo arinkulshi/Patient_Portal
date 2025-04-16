@@ -3,7 +3,7 @@ import { ReportModel } from '../../../src/models/report.model';
 import { Report} from '../../../src/types';
 
 describe('ReportModel', () => {
-  // Sample data for tests
+
   const sampleReportData: Partial<Report> = {
     patientName: 'Test Patient',
     patientId: 'TEST001',
@@ -15,13 +15,13 @@ describe('ReportModel', () => {
     it('should create a new report with defaults for missing fields', () => {
       const report = new ReportModel(sampleReportData);
       
-      // Check that required fields are set
+      
       expect(report.patientName).toBe(sampleReportData.patientName);
       expect(report.patientId).toBe(sampleReportData.patientId);
       expect(report.summary).toBe(sampleReportData.summary);
       expect(report.type).toBe(sampleReportData.type);
       
-      // Check that default values are set
+      
       expect(report.id).toBeDefined();
       expect(report.date).toBeDefined();
       expect(report.createdAt).toBeDefined();
@@ -53,7 +53,7 @@ describe('ReportModel', () => {
       const initialDate = report.date;
       const initialUpdatedAt = report.updatedAt;
       
-      // Wait a bit to ensure updatedAt will be different
+      
       jest.advanceTimersByTime(1000);
       
       const newData: Partial<Report> = {
@@ -63,14 +63,14 @@ describe('ReportModel', () => {
       
       report.update(newData);
       
-      // Check that fields were updated
+     
       expect(report.patientName).toBe(newData.patientName);
       expect(report.summary).toBe(newData.summary);
       
-      // Check that date was not changed
+      
       expect(report.date).toBe(initialDate);
       
-      // Check that updatedAt was changed
+      
       expect(report.updatedAt).not.toBe(initialUpdatedAt);
     });
 
@@ -80,11 +80,11 @@ describe('ReportModel', () => {
       
       report.update({
         patientName: 'New Name',
-        // type is deliberately not included
+        
       });
       
       expect(report.patientName).toBe('New Name');
-      expect(report.type).toBe(originalType); // Should remain unchanged
+      expect(report.type).toBe(originalType); 
     });
   });
 
@@ -93,7 +93,7 @@ describe('ReportModel', () => {
       const report = new ReportModel(sampleReportData);
       const json = report.toJSON();
       
-      // Check that the result is a plain object
+      
       expect(json).toEqual({
         id: report.id,
         patientName: report.patientName,
@@ -125,10 +125,10 @@ describe('ReportModel', () => {
       
       const report = ReportModel.fromJSON(plainObject);
       
-      // Check that it's an instance of ReportModel
+      
       expect(report).toBeInstanceOf(ReportModel);
       
-      // Check that all properties were correctly set
+      
       expect(report.id).toBe(plainObject.id);
       expect(report.patientName).toBe(plainObject.patientName);
       expect(report.patientId).toBe(plainObject.patientId);
