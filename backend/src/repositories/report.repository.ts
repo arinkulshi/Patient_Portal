@@ -5,9 +5,7 @@ import { IRepository, FilterOptions, PaginatedResult } from './base.repository';
 import { InMemoryStorage } from '../storage/in-memory.storage';
 import { AppError } from '../middleware/error.middleware';
 
-/**
- * Repository for Report entities with optimized querying
- */
+
 export class ReportRepository implements IRepository<Report> {
   private storage: InMemoryStorage<Report>;
   
@@ -15,26 +13,19 @@ export class ReportRepository implements IRepository<Report> {
     this.storage = new InMemoryStorage<Report>('reports');
   }
   
-  /**
-   * Initialize the repository (load data from storage)
-   */
+  
   async initialize(): Promise<void> {
     await this.storage.initialize();
   }
   
-  /**
-   * Find all reports, optimized with more efficient filtering
-   */
+
   async findAll(filters?: ReportFilterParams & FilterOptions): Promise<Report[]> {
-    // If no filters, use more efficient direct retrieval
     if (!filters || Object.keys(filters).length === 0) {
       return this.storage.getAll();
     }
     
-    // Create a filter function that checks all filter conditions
     const filterFunction = this.createFilterFunction(filters);
     
-    // Use the query method which is more optimized than getting all and filtering
     return this.storage.query(filterFunction);
   }
   

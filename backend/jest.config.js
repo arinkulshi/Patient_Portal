@@ -6,7 +6,7 @@ module.exports = {
     transform: {
       '^.+\\.tsx?$': 'ts-jest'
     },
-    collectCoverage: true,
+    collectCoverage: false,
     coverageDirectory: 'coverage',
     collectCoverageFrom: [
       'src/**/*.ts',

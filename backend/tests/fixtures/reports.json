@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "patientName": "John Smith",
+    "patientId": "P001",
+    "date": "2025-03-15T10:30:00Z",
+    "summary": "Patient presented with mild fever and cough. Chest X-ray shows no signs of pneumonia.",
+    "type": "General",
+    "createdAt": "2025-03-15T10:30:00Z",
+    "updatedAt": "2025-03-15T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "patientName": "Jane Doe",
+    "patientId": "P002",
+    "date": "2025-03-14T14:45:00Z",
+    "summary": "Blood test reveals elevated cholesterol levels. Patient also shows signs of tachycardia during physical examination.",
+    "type": "Lab",
+    "createdAt": "2025-03-14T14:45:00Z",
+    "updatedAt": "2025-03-14T14:45:00Z"
+  },
+  {
+    "id": "3",
+    "patientName": "Bob Johnson",
+    "patientId": "P003",
+    "date": "2025-03-10T09:15:00Z",
+    "summary": "MRI scan of right knee shows minor tear in the meniscus. Physical therapy recommended.",
+    "type": "Radiology",
+    "createdAt": "2025-03-10T09:15:00Z",
+    "updatedAt": "2025-03-10T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "patientName": "Sarah Williams",
+    "patientId": "P004",
+    "date": "2025-03-08T11:00:00Z",
+    "summary": "Patient reports intermittent chest pain. ECG shows possible arrhythmia. Referred to cardiologist.",
+    "type": "Cardiology",
+    "createdAt": "2025-03-08T11:00:00Z",
+    "updatedAt": "2025-03-08T11:00:00Z"
+  },
+  {
+    "id": "5",
+    "patientName": "John Smith",
+    "patientId": "P001",
+    "date": "2025-02-28T09:00:00Z",
+    "summary": "Follow-up for respiratory infection. Symptoms have improved.",
+    "type": "Pulmonology",
+    "createdAt": "2025-02-28T09:00:00Z",
+    "updatedAt": "2025-02-28T09:00:00Z"
+  }
+]

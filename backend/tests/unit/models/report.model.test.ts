@@ -1,6 +1,6 @@
 // backend/tests/unit/models/report.model.test.ts
-import { ReportModel } from '../../../../src/models/report.model';
-import { Report} from '../../../../src/types';
+import { ReportModel } from '../../../src/models/report.model';
+import { Report} from '../../../src/types';
 
 describe('ReportModel', () => {
   // Sample data for tests
