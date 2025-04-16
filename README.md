@@ -1,7 +1,7 @@
 
 # Patient Portal App
 
-The Patient Portal Backend provides an API for patients to access and view their medical reports. It includes support for filtering reports by patient name, data and a in-mem data storage
+The Patient Portal App provides an API and UI for patients to access and view their medical reports. It includes support for filtering reports by patient name, data and a in-mem data storage
 
 
 API's and Backend Provide: 
