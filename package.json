@@ -24,6 +24,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/jest": "^29.5.14",
         "ajv": "^8.17.1",
         "concurrently": "^8.2.0"
     }

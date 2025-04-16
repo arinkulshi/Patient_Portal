@@ -1,6 +1,4 @@
-/**
- * Generic Repository Interface for CRUD operations
- */
+
 export interface IRepository<T> {
     findAll(filters?: any): Promise<T[]>;
     findById(id: string): Promise<T | null>;
@@ -10,9 +8,7 @@ export interface IRepository<T> {
     count(filters?: any): Promise<number>;
   }
   
-  /**
-   * Filter options for query operations
-   */
+ 
   export interface FilterOptions {
     limit?: number;
     offset?: number;
@@ -21,9 +17,7 @@ export interface IRepository<T> {
     [key: string]: any;
   }
   
-  /**
-   * Result with pagination
-   */
+
   export interface PaginatedResult<T> {
     data: T[];
     total: number;

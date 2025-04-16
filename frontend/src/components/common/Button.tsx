@@ -1,22 +1,23 @@
 import React from 'react';
-import { 
-  Button as MuiButton, 
+import {
+  Button as MuiButton,
   ButtonProps as MuiButtonProps,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
+import { LinkProps } from 'react-router-dom';
 
-interface ButtonProps extends MuiButtonProps {
+type ExtendedButtonProps = MuiButtonProps & Partial<LinkProps> & {
   loading?: boolean;
   loadingText?: string;
-}
+};
 
-const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  loading = false, 
+const Button: React.FC<ExtendedButtonProps> = ({
+  children,
+  loading = false,
   loadingText,
   disabled,
   startIcon,
-  ...props 
+  ...props
 }) => {
   return (
     <MuiButton

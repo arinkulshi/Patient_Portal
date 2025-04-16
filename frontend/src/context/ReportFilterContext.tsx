@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { ReportFilterParams, ReportType } from '@/types/report';
+import { createContext, useContext, useState, ReactNode } from 'react';
+import { ReportFilterParams } from '@/types/report';
 
 interface ReportFilterContextType {
   filters: ReportFilterParams;

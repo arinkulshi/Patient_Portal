@@ -1,11 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import DescriptionIcon from '@mui/icons-material/Description';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 
 const Header: React.FC = () => {
-  const location = useLocation();
   const appName = import.meta.env.VITE_APP_NAME || 'Patient Portal';
 
   return (
@@ -35,25 +31,8 @@ const Header: React.FC = () => {
         </Typography>
         
         <Box className="flex-grow">
-          <Button 
-            component={Link} 
-            to="/" 
-            color="inherit" 
-            startIcon={<DashboardIcon />}
-            className={location.pathname === '/' ? 'border-b-2 border-white' : ''}
-          >
-            Dashboard
-          </Button>
+        
           
-          <Button 
-            component={Link} 
-            to="/reports" 
-            color="inherit" 
-            startIcon={<DescriptionIcon />}
-            className={location.pathname.startsWith('/reports') ? 'border-b-2 border-white' : ''}
-          >
-            Reports
-          </Button>
         </Box>
       </Toolbar>
     </AppBar>

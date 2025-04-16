@@ -8,7 +8,8 @@ import {
   InputLabel, 
   Select, 
   MenuItem,
-  Button as MuiButton
+  Button as MuiButton,
+  SelectChangeEvent
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -117,6 +118,26 @@ const ReportForm: React.FC<ReportFormProps> = ({
       }
     }
   };
+  const handleSelectChange = (
+    event: SelectChangeEvent<ReportType>, // this makes it type-safe
+    _: React.ReactNode // the second arg is not used
+  ) => {
+    const { name, value } = event.target;
+  
+    if (name) {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value as ReportType
+      }));
+  
+      if (validationErrors[name]) {
+        setValidationErrors({
+          ...validationErrors,
+          [name]: ''
+        });
+      }
+    }
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -174,16 +195,16 @@ const ReportForm: React.FC<ReportFormProps> = ({
             <FormControl fullWidth required>
               <InputLabel id="report-type-label">Report Type</InputLabel>
               <Select
-                labelId="report-type-label"
-                name="type"
-                value={formData.type || 'General'}
-                label="Report Type"
-                onChange={handleChange}
-              >
-                {reportTypes.map((type) => (
-                  <MenuItem key={type} value={type}>{type}</MenuItem>
-                ))}
-              </Select>
+  labelId="report-type-label"
+  name="type"
+  value={formData.type || 'General'}
+  label="Report Type"
+  onChange={handleSelectChange}
+>
+  {reportTypes.map((type) => (
+    <MenuItem key={type} value={type}>{type}</MenuItem>
+  ))}
+</Select>
             </FormControl>
           </Grid>
           

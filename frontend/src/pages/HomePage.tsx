@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PersonIcon from '@mui/icons-material/Person';
-import WarningIcon from '@mui/icons-material/Warning';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import MainLayout from '@/components/layout/MainLayout';
@@ -12,7 +11,6 @@ import Button from '@/components/common/Button';
 import Loader from '@/components/common/Loader';
 import ReportCard from '@/components/reports/ReportCard';
 import { useReports } from '@/hooks/useReports';
-import { hasHighSeverityAlerts } from '@/utils/alerts';
 
 const HomePage: React.FC = () => {
   const { reports, loading, error, fetchReports } = useReports({
@@ -23,23 +21,9 @@ const HomePage: React.FC = () => {
 
   const [stats, setStats] = useState({
     totalReports: 0,
-    totalPatients: 0,
-    reportsWithAlerts: 0,
   });
 
-  useEffect(() => {
-    if (reports.length > 0) {
-      // Calculate basic stats from the reports we have
-      const patientIds = new Set(reports.map(report => report.patientId));
-      const alertReports = reports.filter(report => hasHighSeverityAlerts(report));
-      
-      setStats({
-        totalReports: reports.length,
-        totalPatients: patientIds.size,
-        reportsWithAlerts: alertReports.length,
-      });
-    }
-  }, [reports]);
+ 
 
   return (
     <MainLayout>
@@ -88,7 +72,7 @@ const HomePage: React.FC = () => {
                 className="text-center"
               >
                 <Typography variant="h3" className="my-4 font-bold text-secondary-600">
-                  {stats.totalPatients}
+                  {stats.totalReports}
                 </Typography>
                 <Button
                   component={Link}
@@ -102,33 +86,6 @@ const HomePage: React.FC = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Card
-                title="Reports with Alerts"
-                icon={<WarningIcon />}
-                className="text-center"
-                highlight={stats.reportsWithAlerts > 0 ? 'error' : 'none'}
-              >
-                <Typography 
-                  variant="h3" 
-                  className={`my-4 font-bold ${
-                    stats.reportsWithAlerts > 0 ? 'text-red-600' : 'text-gray-600'
-                  }`}
-                >
-                  {stats.reportsWithAlerts}
-                </Typography>
-                <Button
-                  component={Link}
-                  to="/reports"
-                  variant={stats.reportsWithAlerts > 0 ? 'contained' : 'outlined'}
-                  color={stats.reportsWithAlerts > 0 ? 'error' : 'primary'}
-                  size="small"
-                  fullWidth
-                >
-                  Review Alerts
-                </Button>
-              </Card>
-            </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
               <Card

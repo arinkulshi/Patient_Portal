@@ -11,7 +11,7 @@ import { useReport } from '@/hooks/useReport';
 const ReportDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { report, loading, error, fetchReport } = useReport(id);
+  const { report, loading, error} = useReport(id);
   
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);

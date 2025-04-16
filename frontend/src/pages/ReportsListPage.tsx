@@ -7,7 +7,7 @@ import ReportList from '@/components/reports/ReportList';
 import { useReports } from '@/hooks/useReports';
 import { useReportFilters } from '@/context/ReportFilterContext';
 import { ReportFilterParams } from '@/types/report';
-import { Typography, Grid } from '@mui/material';
+import { Typography } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Card from '@/components/common/Card';
 

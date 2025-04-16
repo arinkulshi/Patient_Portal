@@ -45,10 +45,7 @@ export function detectMedicalAlerts(report: Report): AlertInfo[] {
   Object.entries(alertKeywords).forEach(([keyword, severity]) => {
     if (summary.includes(keyword.toLowerCase())) {
       // Find the context around the keyword (surrounding sentence)
-      const sentences = summary.split(/[.!?]+/);
-      const relevantSentence = sentences.find(sentence => 
-        sentence.toLowerCase().includes(keyword.toLowerCase())
-      );
+  
       
       alerts.push({
         severity,
