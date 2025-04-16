@@ -1,22 +1,31 @@
 import React, { ReactNode } from 'react';
+import { Container, Box } from '@mui/material';
+import Header from './Header';
+import Footer from './Footer';
 
 interface MainLayoutProps {
   children: ReactNode;
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({ 
+  children, 
+  maxWidth = 'lg' 
+}) => {
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>Patient Portal</h1>
-      </header>
-      <main className="app-content">
+    <Box className="flex flex-col min-h-screen">
+      <Header />
+      
+      <Container 
+        maxWidth={maxWidth} 
+        component="main" 
+        className="flex-grow py-8"
+      >
         {children}
-      </main>
-      <footer className="app-footer">
-        <p>&copy; {new Date().getFullYear()} Patient Portal</p>
-      </footer>
-    </div>
+      </Container>
+      
+      <Footer />
+    </Box>
   );
 };
 

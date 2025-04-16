@@ -1,59 +1,70 @@
-// src/hooks/useReport.ts
 import { useState, useEffect } from 'react';
-import { reportService } from '../../../backend/src/services/report.service';
-import { Report } from '../types';
+import { reportService } from '@/api/reports';
+import { Report, ReportFilterParams, Pagination } from '@/types/report';
+import { AxiosError } from 'axios';
+import { ApiError } from '@/api/types';
 
-/**
- * Custom hook for fetching and managing a single report
- */
-export const useReport = (id: string) => {
-  const [report, setReport] = useState<Report | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+interface UseReportsResult {
+  reports: Report[];
+  pagination: Pagination | null;
+  loading: boolean;
+  error: string | null;
+  fetchReports: (params?: ReportFilterParams) => Promise<void>;
+  deleteReport: (id: string) => Promise<boolean>;
+}
 
-  useEffect(() => {
-    const fetchReport = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        const data = await reportService.getReportById(id);
-        setReport(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch report'));
-      } finally {
-        setLoading(false);
-      }
-    };
+export function useReports(initialFilters?: ReportFilterParams): UseReportsResult {
+  const [reports, setReports] = useState<Report[]>([]);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-    if (id) {
-      fetchReport();
+  const fetchReports = async (params?: ReportFilterParams) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const filters = { ...initialFilters, ...params };
+      const response = await reportService.getReports(filters);
+      
+      setReports(response.data);
+      
+      const { total, page, limit, totalPages } = response;
+      setPagination({ total, page, limit, totalPages });
+    } catch (err) {
+      const axiosError = err as AxiosError<ApiError>;
+      const errorMessage = axiosError.response?.data.error.message || 'Failed to fetch reports';
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
-  }, [id]);
+  };
 
-  return { report, loading, error };
-};
-
-// src/hooks/useDebounce.ts
-import { useState, useEffect } from 'react';
-
-/**
- * Custom hook for debouncing a value (useful for search inputs)
- */
-export function useDebounce<T>(value: T, delay: number = 500): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+  const deleteReport = async (id: string): Promise<boolean> => {
+    setError(null);
+    
+    try {
+      await reportService.deleteReport(id);
+      setReports(reports.filter(report => report.id !== id));
+      return true;
+    } catch (err) {
+      const axiosError = err as AxiosError<ApiError>;
+      const errorMessage = axiosError.response?.data.error.message || 'Failed to delete report';
+      setError(errorMessage);
+      return false;
+    }
+  };
 
   useEffect(() => {
-    // Update debounced value after specified delay
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    fetchReports(initialFilters);
+  }, []);
 
-    // Cancel the timeout if value changes or unmounts
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
+  return {
+    reports,
+    pagination,
+    loading,
+    error,
+    fetchReports,
+    deleteReport
+  };
 }

@@ -61,3 +61,4 @@ export class ReportModel implements Report {
     return new ReportModel(data);
   }
 }
+
